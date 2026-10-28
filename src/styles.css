@@ -164,14 +164,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .nav-link {
   display: inline-flex; align-items: center; padding: 7px 16px; border-radius: var(--r-pill);
   font-size: 12.5px; color: var(--fg-2); text-decoration: none; letter-spacing: .01em;
-  transition: color .3s var(--ease), background-color .3s var(--ease);
+  transition: color .3s var(--ease), background-color .3s var(--ease), border-radius .3s var(--ease);
 }
 .nav-group:hover > .nav-link,
 .nav-group.is-open > .nav-link {
-  color: var(--fg); background: var(--panel); border-radius: var(--r-pill);
+  color: var(--fg);
+  background: var(--menu-solid);
+  border-radius: var(--r-pill) var(--r-pill) 0 0;
 }
 
-/* Выпадающий список: ширина равна триггеру, углы снизу скруглены. */
+/* Выпадающий список: продолжение плашки — ширина та же, верх без рамки. */
 .nav-dropdown {
   position: absolute; top: 100%; left: 0; right: 0; padding-top: 8px; z-index: 10;
   opacity: 0; visibility: hidden; transform: translateY(-6px);
@@ -179,11 +181,18 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 }
 .nav-group:hover .nav-dropdown,
 .nav-group.is-open .nav-dropdown { opacity: 1; visibility: visible; transform: none; }
+/* Мост через нижний отступ шапки: без него под плашкой видна её граница. */
+.nav-dropdown::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px;
+  background: var(--menu-solid);
+  border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+}
 .nav-dropdown ul {
+  position: relative;
   list-style: none; margin: 0; padding: 4px;
   background: var(--menu-solid);
-  border: 1px solid var(--line);
-  border-radius: var(--r-xs) var(--r-xs) var(--r-md) var(--r-md);
+  border: 1px solid var(--line); border-top: 0;
+  border-radius: 0 0 var(--r-md) var(--r-md);
   box-shadow: var(--menu-shadow);
 }
 .nav-dropdown a {
@@ -458,7 +467,7 @@ h1 {
 .field-trigger:hover { border-color: color-mix(in srgb, var(--fg) 30%, transparent); }
 .field-trigger[aria-expanded='true'] {
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  background: var(--menu-solid);
 }
 .field-select[data-dir='down'] .field-trigger[aria-expanded='true'] {
   border-bottom-color: transparent; border-radius: var(--r-sm) var(--r-sm) 0 0;
