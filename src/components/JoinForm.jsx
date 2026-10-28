@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { CLUB, FORM } from '../data/content.js'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -15,6 +15,7 @@ function TopicSelect({ id, labelId, value, options, onChange }) {
   const [active, setActive] = useState(() => Math.max(0, options.indexOf(value)))
   const rootRef = useRef(null)
   const triggerRef = useRef(null)
+  const panelRef = useRef(null)
 
   // Место внизу кончается — раскрываем вверх, зеркаля скругления.
   const place = () => {
@@ -24,6 +25,29 @@ function TopicSelect({ id, labelId, value, options, onChange }) {
     const below = window.innerHeight - rect.bottom
     return below < needed && rect.top > below ? 'up' : 'down'
   }
+
+  // Высоту панели CSS не берёт из auto — меряем её и отдаём в --menu-h:
+  // так нижняя граница уезжает, а скругления и боковины остаются на месте.
+  useLayoutEffect(() => {
+    const panel = panelRef.current
+    if (!panel) return undefined
+
+    const set = () => {
+      panel.style.setProperty('--menu-h', `${Math.min(panel.scrollHeight, 260)}px`)
+    }
+
+    set()
+    const observer = new ResizeObserver(set)
+    const list = panel.querySelector('ul')
+    if (list) observer.observe(list)
+    window.addEventListener('resize', set)
+    document.fonts?.ready.then(set)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', set)
+    }
+  }, [options])
 
   useEffect(() => {
     if (!open) return undefined
@@ -96,7 +120,12 @@ function TopicSelect({ id, labelId, value, options, onChange }) {
         </svg>
       </button>
 
-      {open && (
+      <div
+        className="field-panel"
+        ref={panelRef}
+        data-open={open ? 'true' : 'false'}
+        aria-hidden={!open}
+      >
         <ul className="field-menu" role="listbox" aria-labelledby={labelId}>
           {options.map((option, index) => (
             <li
@@ -111,7 +140,7 @@ function TopicSelect({ id, labelId, value, options, onChange }) {
             </li>
           ))}
         </ul>
-      )}
+      </div>
     </div>
   )
 }

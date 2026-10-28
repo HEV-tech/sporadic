@@ -58,6 +58,33 @@ export default function SiteHeader({
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open, onClose])
 
+  // Высоту панелей CSS не умеет анимировать от auto: меряем и отдаём
+  // в переменную --panel-h, чтобы нижняя граница плавно уезжала вниз.
+  useEffect(() => {
+    const panels = [...document.querySelectorAll('.nav-panel')]
+    if (panels.length === 0) return undefined
+
+    const measure = () => {
+      panels.forEach((panel) => {
+        panel.style.setProperty('--panel-h', `${panel.scrollHeight}px`)
+      })
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    panels.forEach((panel) => {
+      const list = panel.querySelector('ul')
+      if (list) observer.observe(list)
+    })
+    window.addEventListener('resize', measure)
+    document.fonts?.ready.then(measure)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
+
   return (
     <>
       <div className="nav-shell">
@@ -85,13 +112,16 @@ export default function SiteHeader({
                 </Link>
 
                 <div className="nav-dropdown">
-                  <ul>
-                    {group.children.map((child) => (
-                      <li key={`${group.to}-${child.to}-${child.label}`}>
-                        <Link to={child.to}>{child.label}</Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="nav-panel">
+                    <span className="nav-bridge" aria-hidden="true" />
+                    <ul>
+                      {group.children.map((child) => (
+                        <li key={`${group.to}-${child.to}-${child.label}`}>
+                          <Link to={child.to}>{child.label}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </li>
             ))}

@@ -176,27 +176,30 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
   padding: 6px 15px;
 }
 
-/* Выпадающий список: продолжение плашки — ширина та же, верх без рамки. */
+/* Выпадающий список: продолжение плашки — ширина та же, верх без рамки.
+   Высота анимируется, поэтому нижняя граница «отодвигается», а скругления
+   и боковые стороны стоят на месте. */
 .nav-dropdown {
-  position: absolute; top: 100%; left: 0; right: 0; padding-top: 8px; z-index: 10;
-  opacity: 0; visibility: hidden; transform: translateY(-6px);
-  transition: opacity .28s var(--ease), transform .28s var(--ease), visibility .28s var(--ease);
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
 }
-.nav-group:hover .nav-dropdown,
-.nav-group.is-open .nav-dropdown { opacity: 1; visibility: visible; transform: none; }
-/* Мост через нижний отступ шапки: без него под плашкой видна её граница. */
-.nav-dropdown::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px;
-  background: var(--menu-solid);
-  border-left: 1px solid var(--line); border-right: 1px solid var(--line);
-}
-.nav-dropdown ul {
-  position: relative;
-  list-style: none; margin: 0; padding: 4px;
+.nav-panel {
+  height: 0; overflow: hidden; visibility: hidden;
   background: var(--menu-solid);
   border: 1px solid var(--line); border-top: 0;
   border-radius: 0 0 var(--r-md) var(--r-md);
   box-shadow: var(--menu-shadow);
+  transition: height .32s var(--ease), visibility 0s linear .32s;
+}
+.nav-group:hover .nav-panel,
+.nav-group.is-open .nav-panel {
+  height: var(--panel-h, auto);
+  visibility: visible;
+  transition: height .32s var(--ease), visibility 0s linear 0s;
+}
+/* Мост через нижний отступ шапки: часть панели, растёт и обрезается вместе с ней. */
+.nav-bridge { display: block; height: 8px; }
+.nav-panel ul {
+  list-style: none; margin: 0; padding: 4px;
 }
 .nav-dropdown a {
   display: block; padding: 7px 5px; border-radius: var(--r-xs);
@@ -276,11 +279,11 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 
 .hero-main {
-  display: grid; grid-template-columns: minmax(0, .55fr) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, .74fr) minmax(0, 1fr);
   gap: clamp(32px, 4vw, 64px); align-items: center; align-content: center;
   flex: 1; margin-top: clamp(16px, 3vh, 36px);
 }
-.emblem { margin: 0; max-width: 480px; min-width: 0; }
+.emblem { margin: 0; max-width: 560px; min-width: 0; }
 .emblem-art {
   display: block; width: max-content; margin: 0; padding: 0;
   font-family: var(--font-mono); font-size: 9px; font-weight: 500; line-height: .92;
@@ -481,26 +484,33 @@ h1 {
 }
 .field-chevron { flex: none; color: var(--fg-3); transition: transform .3s var(--ease), color .3s var(--ease); }
 .field-trigger[aria-expanded='true'] .field-chevron { transform: rotate(180deg); color: var(--accent); }
-/* Общая коробка списка: направление и скругления задаёт data-dir. */
-.field-menu {
+/* Общая коробка списка: направление задаёт data-dir, открытость — data-open.
+   Высота анимируется: растёт вниз (или вверх), скругления на месте. */
+.field-panel {
   position: absolute; left: 0; right: 0; z-index: 30;
-  list-style: none; margin: 0; padding: 6px; max-height: 260px; overflow: auto;
+  height: 0; overflow: hidden; visibility: hidden;
   background: var(--menu-solid);
   border: 1px solid var(--accent);
   box-shadow: var(--menu-shadow);
+  transition: height .32s var(--ease), visibility 0s linear .32s;
 }
-.field-select[data-dir='down'] .field-menu {
+.field-panel[data-open='true'] {
+  height: var(--menu-h, auto);
+  visibility: visible;
+  transition: height .32s var(--ease), visibility 0s linear 0s;
+}
+.field-select[data-dir='down'] .field-panel {
   top: 100%; bottom: auto; border-top: 0;
   border-radius: 0 0 var(--r-sm) var(--r-sm);
-  animation: field-menu-in .22s var(--ease);
 }
-.field-select[data-dir='up'] .field-menu {
+.field-select[data-dir='up'] .field-panel {
   top: auto; bottom: 100%; border-bottom: 0;
   border-radius: var(--r-sm) var(--r-sm) 0 0;
-  animation: field-menu-up .22s var(--ease);
 }
-@keyframes field-menu-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-@keyframes field-menu-up { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.field-menu {
+  list-style: none; margin: 0; padding: 6px;
+  max-height: 260px; overflow: auto;
+}
 .field-menu li { padding: 9px 12px; border-radius: var(--r-xs); font-size: 13px; line-height: 1.4; color: var(--fg-2); cursor: pointer; }
 .field-menu li.is-active { background: var(--accent-soft); color: var(--fg); }
 .field-menu li[aria-selected='true'] { color: var(--accent); }
