@@ -170,7 +170,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .nav-group.is-open > .nav-link {
   color: var(--fg);
   background: var(--menu-solid);
-  border-radius: var(--r-pill) var(--r-pill) 0 0;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  padding: 6px 15px;
 }
 
 /* Выпадающий список: продолжение плашки — ширина та же, верх без рамки. */
@@ -284,9 +287,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
   letter-spacing: 0; white-space: pre; color: var(--fg);
 }
 .emblem-art .row { display: block; }
-/* На светлом фоне тонкие штрихи выцветают — поднимаем вес и плотность знака. */
-[data-theme='light'] .emblem-art { font-weight: 700; -webkit-text-stroke: .3px currentColor; }
-.emblem-skeleton { width: 100%; aspect-ratio: 103 / 68; border-radius: var(--r-lg); }
+/* На светлом фоне тонкие штрихи выцветают — поднимаем вес без обводки:
+   со stroke 0.3 px плотные ряды слипаются в пятно. */
+[data-theme='light'] .emblem-art { font-weight: 600; }
+.emblem-skeleton { width: 100%; aspect-ratio: 115 / 61; border-radius: var(--r-lg); }
 .emblem-cap {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   margin: 20px 0 0; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2);

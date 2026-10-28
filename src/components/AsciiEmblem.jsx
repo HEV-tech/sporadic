@@ -11,7 +11,7 @@ const MAX_FONT_SIZE = 96
  * эмблема, отдельной сборки арта не нужно. Кегль подбирается замером ширины
  * строки: у разных моноширинных шрифтов разная ширина знака.
  */
-export default function AsciiEmblem({ src, label, columns = 108 }) {
+export default function AsciiEmblem({ src, label, columns = 115 }) {
   const [rows, setRows] = useState([])
   const preRef = useRef(null)
 

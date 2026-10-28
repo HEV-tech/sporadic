@@ -9,8 +9,9 @@
 
 export const DEFAULT_RAMP = ' .:-=+*#%@'
 
-/** Отношение ширины знака к высоте строки у моноширинного шрифта. */
-export const CHAR_ASPECT = 0.55
+/** Отношение ширины знака к высоте строки у моноширинного шрифта.
+ *  Подобрано под эталонную эмблему: 115 колонок на 61 строку. */
+export const CHAR_ASPECT = 0.462
 
 /** Сколько пикселей растра приходится на одну клетку при отрисовке. */
 export const SAMPLES_PER_CELL = 6
@@ -138,13 +139,14 @@ export function rasterize(image, targetWidth) {
  */
 export function buildRows(context, width, height, options = {}) {
   const {
-    columns = 108,
+    columns = 115,
     ramp = DEFAULT_RAMP,
     gamma = 1.28,
-    blur = 0.9,
+    blur = 0,
+    aspect = CHAR_ASPECT,
   } = options
 
-  const rows = Math.max(1, Math.round(columns * (height / width) * CHAR_ASPECT))
+  const rows = Math.max(1, Math.round(columns * (height / width) * aspect))
   const cellWidth = width / columns
   const cellHeight = height / rows
   const { data } = context.getImageData(0, 0, width, height)
