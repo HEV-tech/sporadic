@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { CLUB, NAV } from '../data/content.js'
 import { closeMenuTimeline, openMenuTimeline } from '../lib/motion.js'
 import ThemeControls from './ThemeControls.jsx'
+import { VideoIcon } from './icons.jsx'
 
 export default function SiteHeader({
   open,
@@ -131,9 +132,16 @@ export default function SiteHeader({
             onToggleTheme={onToggleTheme}
           />
 
-          <Link className="btn btn-primary btn-sm" to="/#join">
-            Вступить
-          </Link>
+          <a
+            className="btn btn-primary btn-sm"
+            href="http://sporadic.ru/cams/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Трансляция с камер клуба"
+          >
+            <VideoIcon />
+            Камеры
+          </a>
 
           <button
             ref={burgerRef}
@@ -178,6 +186,16 @@ export default function SiteHeader({
         </div>
 
         <div className="menu-tail">
+          <a
+            className="btn btn-primary"
+            href="http://sporadic.ru/cams/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+          >
+            <VideoIcon />
+            Камеры клуба
+          </a>
           <ThemeControls
             className="menu-theme"
             theme={theme}

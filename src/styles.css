@@ -231,7 +231,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .theme-controls { display: flex; align-items: center; gap: 12px; }
 .theme-toggle {
   width: 36px; height: 36px; display: grid; place-items: center; cursor: pointer;
-  border-radius: var(--r); border: var(--bw) solid var(--line); background: transparent; color: var(--fg-2);
+  border-radius: 50%; border: var(--bw) solid var(--line); background: transparent; color: var(--fg-2);
   transition: color .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
 }
 .theme-toggle:hover { color: var(--fg); border-color: var(--accent); }
@@ -260,7 +260,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .menu-note { margin: 0; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3); }
 .menu-theme { padding: 10px 16px; border: var(--bw) solid var(--line); border-radius: var(--r); }
 
-@media (max-width: 900px) {
+/* Шапка в естественную ширину занимает ~1106 px: ниже 1200 она не влезает
+   и уезжает в меню вместе с кнопкой камер. */
+@media (max-width: 1200px) {
   .nav-links, .nav-theme, .nav .btn-sm { display: none; }
   .burger { display: block; }
   .nav { justify-content: space-between; width: 100%; padding: 6px 8px 6px 18px; }
@@ -539,7 +541,7 @@ h1 {
 .faq-list summary:hover { color: var(--accent); }
 .faq-list summary .pm {
   display: grid; place-items: center; flex: none;
-  width: 28px; height: 28px; border-radius: var(--r-sm); border: var(--bw) solid var(--line);
+  width: 28px; height: 28px; border-radius: 50%; border: var(--bw) solid var(--line);
   color: var(--accent); font-size: 15px; line-height: 1;
   transition: transform .45s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
 }
