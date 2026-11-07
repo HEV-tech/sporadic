@@ -13,8 +13,12 @@ const inlineLogo = (filePath) => (filePath.includes('sporadic-logo') ? true : un
 // корень, иначе на вложенных маршрутах (/sport/events) ассеты дают 404.
 export default defineConfig(({ mode }) => ({
   base: mode === 'single' ? './' : '/',
+  // Vite цепляется к IPv6-loopback, и тогда http://localhost из браузера
+  // уходит на 127.0.0.1 и получает отказ. Держим явный IPv4.
+  server: { host: '127.0.0.1' },
   plugins: [react(), ...(mode === 'single' ? [viteSingleFile()] : [])],
   build: {
+    outDir: mode === 'single' ? 'dist-single' : 'dist',
     assetsInlineLimit: mode === 'single' ? 4_000_000 : inlineLogo,
     cssCodeSplit: false,
   },
