@@ -1,23 +1,24 @@
 /* Дизайн-система сайта радиоклуба «СПОРАДИК».
    Три материала: чертёж (тёмная сцена), бумага (светлый холст), терминал (код).
-   Тема живёт на <html data-theme>; палитра одна — чертёжный кобальт.
-   Радиусы 0–2 px, теней нет: структуру несут hairline и --line-strong. */
+   Тема живёт на <html data-theme>; палитра одна — индиго Dovetail.
+   Радиусы 8 px на компонентах, 4 px на тегах; тени не используются,
+   глубину даёт ступень яркости поверхностей. */
 
 :root {
   --font-display: 'Unbounded Variable', 'Segoe UI', system-ui, sans-serif;
   --font-read: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono Variable', 'Consolas', ui-monospace, monospace;
 
-    /* Радиусы как у aesa: 12 px на компонентах, 4 px только на мелких
-     подсветках внутри списков. Обводка компонентов — 2 px (--bw),
-     разделители и линейки остаются в 1 px. */
-  --r: 12px;
+    /* Радиусы по Dovetail: 8 px на карточках, полях и кнопках, 4 px на тегах
+     и мелких подсветках. Пилюля — только ссылки в шапке.
+     Обводка компонентов 2 px (--bw), разделители остаются 1 px. */
+  --r: 8px;
   --r-xs: 4px;
-  --r-sm: 12px;
-  --r-md: 12px;
-  --r-lg: 12px;
-  --r-xl: 12px;
-  --r-pill: 12px;
+  --r-sm: 8px;
+  --r-md: 8px;
+  --r-lg: 8px;
+  --r-xl: 8px;
+  --r-pill: 999px;
   --bw: 2px;
 
   --max: 1240px;
@@ -30,48 +31,48 @@
 /* Ночной чертёж: тёмная сцена и второй вариант холста. */
 :root,
 [data-theme='dark'] {
-  --bg: #0A0A09;
-  --surface: #141412;
-  --fg: #EDEAE2;
-  --fg-2: #A9A69C;
-  --fg-3: #8E8A7E;
-  --line: rgba(237, 234, 226, .16);
-  --line-2: rgba(237, 234, 226, .08);
-  --line-strong: rgba(237, 234, 226, .42);
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --raised: #1E1E1E;
+  --fg: #FFFFFF;
+  --fg-2: #A7A7A7;
+  --fg-3: #7C7C7C;
+  --line: #313131;
+  --line-2: #1E1E1E;
+  --line-strong: #666666;
   --accent: #6798FF;
-  --on-accent: #0A0A09;
-  --signal: #E9A13B;
-  --danger: #FF8A80;
-  --panel: rgba(237, 234, 226, .04);
-  --grid: rgba(237, 234, 226, .06);
-  --glass: rgba(10, 10, 9, .72);
-  --overlay: rgba(10, 10, 9, .92);
+  --on-accent: #0A0A0A;
+  --danger: #FF7A7A;
+  --panel: rgba(255, 255, 255, .04);
+  --grid: rgba(255, 255, 255, .05);
+  --glass: rgba(10, 10, 10, .72);
+  --overlay: rgba(10, 10, 10, .92);
   --photo-filter: grayscale(1) contrast(1.05) brightness(.92);
 }
 
 /* Бумага: основной холст сайта. */
 [data-theme='light'] {
-  --bg: #F5F3EC;
-  --surface: #FBFAF6;
-  --fg: #14130F;
-  --fg-2: #52504A;
-  --fg-3: #6C6656;
-  --line: rgba(20, 19, 15, .16);
-  --line-2: rgba(20, 19, 15, .08);
-  --line-strong: rgba(20, 19, 15, .50);
-  --accent: #103DFF;
+  --bg: #F4F4F2;
+  --surface: #FAFAF8;
+  --raised: #FFFFFF;
+  --fg: #0A0A0A;
+  --fg-2: #54544F;
+  --fg-3: #6B6B66;
+  --line: #D8D8D4;
+  --line-2: #E6E6E2;
+  --line-strong: #8A8A85;
+  --accent: #2F63C9;
   --on-accent: #FFFFFF;
-  --signal: #9A5A00;
   --danger: #B3261E;
-  --panel: rgba(20, 19, 15, .035);
-  --grid: rgba(20, 19, 15, .07);
-  --glass: rgba(245, 243, 236, .82);
-  --overlay: rgba(245, 243, 236, .94);
+  --panel: rgba(10, 10, 10, .035);
+  --grid: rgba(10, 10, 10, .05);
+  --glass: rgba(244, 244, 242, .82);
+  --overlay: rgba(244, 244, 242, .94);
   --photo-filter: grayscale(1) contrast(1.04) brightness(1);
 }
 
 /* ---------- палитра ---------- */
-/* Акцент один на всю систему: чертёжный кобальт из темы.
+/* Акцент один на всю систему: индиго Dovetail из темы.
    Выбор палитры убран из интерфейса, данные палитры больше не читаются. */
 :root {
   --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
@@ -126,13 +127,13 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 /* ---------- кнопки и ссылки ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 46px; padding: 13px 26px; border: var(--bw) solid transparent; border-radius: var(--r-pill);
+  min-height: 46px; padding: 13px 26px; border: var(--bw) solid transparent; border-radius: var(--r);
   font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: .01em;
   text-decoration: none; cursor: pointer;
   transition: transform .45s var(--ease), background-color .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
 }
-.btn-primary { background: var(--accent); color: var(--on-accent); }
-.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary { background: var(--fg); color: var(--bg); }
+.btn-primary:hover { opacity: .88; }
 .btn-primary:active { transform: translateY(0) scale(.985); }
 .btn-ghost { background: transparent; color: var(--fg); border-color: var(--line-strong); }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
@@ -154,7 +155,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .nav {
   pointer-events: auto; display: flex; align-items: center; gap: 20px;
   padding: 8px 8px 8px 22px;
-  border: var(--bw) solid var(--line); border-radius: var(--r-pill);
+  border: var(--bw) solid var(--line); border-radius: var(--r);
   background: var(--glass);
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
@@ -257,7 +258,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
 .menu-links > a { border-bottom: 1px solid var(--line-2); padding-bottom: 14px; }
 .menu-tail { margin-top: 34px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
 .menu-note { margin: 0; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3); }
-.menu-theme { padding: 10px 16px; border: var(--bw) solid var(--line); border-radius: var(--r-pill); }
+.menu-theme { padding: 10px 16px; border: var(--bw) solid var(--line); border-radius: var(--r); }
 
 @media (max-width: 900px) {
   .nav-links, .nav-theme, .nav .btn-sm { display: none; }
@@ -273,7 +274,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; }
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-3);
 }
 .hero-meta .live { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-2); }
-.hero-meta .live i { width: 6px; height: 6px; background: var(--signal); border-radius: 2px; animation: pulse 3.2s var(--ease) infinite; }
+.hero-meta .live i { width: 6px; height: 6px; background: var(--accent); border-radius: 2px; animation: pulse 3.2s var(--ease) infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 
 .hero-main {
@@ -449,7 +450,7 @@ h1 {
 .field select {
   appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 38px;
   font-family: var(--font-mono); font-size: 13.5px; font-weight: 400; line-height: 1.4;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238B877B' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237C7C7C' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 16px center;
 }
 .field select option { background: var(--bg); color: var(--fg); }
@@ -599,7 +600,7 @@ footer { border-top: 1px solid var(--line); padding: 64px 0 32px; font-size: 12.
 .doc-toc { position: sticky; top: 104px; display: flex; flex-direction: column; gap: 4px; }
 .doc-toc a {
   font-size: 12.5px; line-height: 1.5; color: var(--fg-3); text-decoration: none;
-  padding: 8px 14px; border-radius: var(--r-pill);
+  padding: 8px 14px; border-radius: var(--r);
   transition: color .3s var(--ease), background-color .3s var(--ease);
 }
 .doc-toc a:hover { color: var(--fg); background: var(--panel); }
@@ -672,7 +673,7 @@ a.archive-row:hover { background: var(--accent-soft); }
 /* ---------- служебное ---------- */
 .skip {
   position: absolute; left: -9999px; top: 12px; z-index: 100;  background: var(--accent); color: var(--on-accent);
-  padding: 12px 20px; border-radius: var(--r-pill); font-size: 12px; text-decoration: none;
+  padding: 12px 20px; border-radius: var(--r); font-size: 12px; text-decoration: none;
 }
 .skip:focus { left: 16px; }
 
