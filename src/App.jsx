@@ -20,7 +20,7 @@ function Site() {
   const [menuOpen, setMenuOpen] = useState(false)
   const mainRef = useRef(null)
   const footerRef = useRef(null)
-  const { theme, palette, toggleTheme, setPalette } = useTheme()
+  const { theme, toggleTheme } = useTheme()
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])
   const toggleMenu = useCallback(() => setMenuOpen((value) => !value), [])
@@ -60,9 +60,7 @@ function Site() {
         onToggle={toggleMenu}
         onClose={closeMenu}
         theme={theme}
-        palette={palette}
         onToggleTheme={toggleTheme}
-        onPalette={setPalette}
       />
 
       <main id="main-content" ref={mainRef} tabIndex={-1}>

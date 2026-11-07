@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" data-theme="dark" data-palette="amber">
+<html lang="ru" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,7 +8,7 @@
       name="description"
       content="Коллективная радиостанция ЮЗГУ работает с 1965 года. Радиоспорт, 148 экспедиций с 1998 года, дипломная программа и технические проекты для школьников. Заявка в актив клуба."
     />
-    <meta name="theme-color" content="#131209" />
+    <meta name="theme-color" content="#0A0A09" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:site_name" content="СПОРАДИК" />
@@ -20,21 +20,19 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23131209'/%3E%3Ctext x='16' y='24' font-family='monospace' font-size='21' font-weight='700' fill='%23FFB020' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5F3EC'/%3E%3Ctext x='16' y='24' font-family='monospace' font-size='21' font-weight='700' fill='%23103DFF' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E"
     />
     <script>
-      // Тема и палитра ставятся до первой отрисовки, чтобы не было вспышки.
+      // Тема ставится до первой отрисовки, чтобы не было вспышки.
+      // По умолчанию сайт открывается листом; ночной чертёж — только по выбору.
       (function () {
         try {
           var saved = JSON.parse(localStorage.getItem('sporadic-theme') || '{}')
-          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-          var theme = saved.theme || (prefersLight ? 'light' : 'dark')
-          var palette = saved.palette || 'amber'
+          var theme = saved.theme === 'dark' ? 'dark' : 'light'
           document.documentElement.dataset.theme = theme
-          document.documentElement.dataset.palette = palette
           document.documentElement.style.colorScheme = theme
         } catch (error) {
-          document.documentElement.dataset.theme = 'dark'
+          document.documentElement.dataset.theme = 'light'
         }
       })()
     </script>

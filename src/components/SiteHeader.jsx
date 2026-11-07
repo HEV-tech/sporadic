@@ -9,9 +9,7 @@ export default function SiteHeader({
   onToggle,
   onClose,
   theme,
-  palette,
   onToggleTheme,
-  onPalette,
 }) {
   const burgerRef = useRef(null)
   const overlayRef = useRef(null)
@@ -130,9 +128,7 @@ export default function SiteHeader({
           <ThemeControls
             className="nav-theme"
             theme={theme}
-            palette={palette}
             onToggleTheme={onToggleTheme}
-            onPalette={onPalette}
           />
 
           <Link className="btn btn-primary btn-sm" to="/#join">
@@ -185,9 +181,7 @@ export default function SiteHeader({
           <ThemeControls
             className="menu-theme"
             theme={theme}
-            palette={palette}
             onToggleTheme={onToggleTheme}
-            onPalette={onPalette}
           />
           <p className="menu-note">Курск · RW3WW · RC3W</p>
         </div>

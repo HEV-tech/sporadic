@@ -1,36 +1,20 @@
-import { PALETTES } from '../lib/theme.js'
 import { MoonIcon, SunIcon } from './icons.jsx'
 
 /**
- * Переключатель оформления: палитра и тема.
- * Стоит в шапке на десктопе и в меню на мобильном.
+ * Переключатель материалов: лист (бумага) и ночь (ночной чертёж).
+ * Акцент в системе один, поэтому выбора палитры больше нет.
  */
-export default function ThemeControls({ theme, palette, onToggleTheme, onPalette, className = '' }) {
+export default function ThemeControls({ theme, onToggleTheme, className = '' }) {
   const isDark = theme === 'dark'
 
   return (
     <div className={`theme-controls ${className}`.trim()}>
-      <div className="swatches" role="group" aria-label="Палитра">
-        {PALETTES.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className="swatch"
-            style={{ '--swatch': isDark ? item.dark : item.light }}
-            aria-label={`Палитра «${item.label}»`}
-            aria-pressed={palette === item.id}
-            title={item.label}
-            onClick={() => onPalette(item.id)}
-          />
-        ))}
-      </div>
-
       <button
         type="button"
         className="theme-toggle"
         onClick={onToggleTheme}
-        aria-label={isDark ? 'Включить светлую тему' : 'Включить тёмную тему'}
-        title={isDark ? 'Светлая тема' : 'Тёмная тема'}
+        aria-label={isDark ? 'Переключить на бумагу' : 'Переключить на ночной чертёж'}
+        title={isDark ? 'Лист' : 'Ночь'}
       >
         {isDark ? <SunIcon /> : <MoonIcon />}
       </button>
